@@ -71,7 +71,7 @@ socket.on('upDateListProduct', (listProduct) => {
     productsList.innerHTML = ''
     for(let clave in listProduct) {
         element = document.createElement('li') 
-        element.textContent = `${listProduct[clave].title} - ${listProduct[clave].price} - Id: ${listProduct[clave].id}`
+        element.textContent = `${listProduct[clave].title} - USD ${listProduct[clave].price} - Id: ${listProduct[clave].id}`
         productsList.appendChild(element)
     }    
 })

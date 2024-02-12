@@ -5,8 +5,7 @@
         "price": 200,
         "thumbail": "Sin imagen",
         "code": "abc01",
-        "stock": 75,
-        "id": "PB4cXoPJ7MTRVA6iM1ytF"
+        "stock": 75
     },
     {
         "title": "Estufa Electrica",
@@ -14,8 +13,7 @@
         "price": 240,
         "thumbail": "Sin imagen",
         "code": "abc02",
-        "stock": 75,
-        "id": "TMuQypvRPOOFM0Qq2OSYP"
+        "stock": 75
     },
     {
         "title": "Microondas Panasonic",
@@ -23,8 +21,7 @@
         "price": 150,
         "thumbail": "Sin imagen",
         "code": "abc03",
-        "stock": 50,
-        "id": "TQHJhEZVMd8_HBTms8aKm"
+        "stock": 50
     },
     {
         "title": "Tostadora Philips",
@@ -32,8 +29,7 @@
         "price": 120,
         "thumbail": "Sin imagen",
         "code": "abc04",
-        "stock": 70,
-        "id": "JgClRBOB2tw4Zwa0Bp4xB"
+        "stock": 70
     },
     {
         "title": "Heladera familiar Sony",
@@ -41,8 +37,7 @@
         "price": 520,
         "thumbail": "Sin imagen",
         "code": "abc06",
-        "stock": 15,
-        "id": "5z63MtzXAl-TdtckHaJZS"
+        "stock": 15
     },
     {
         "title": "Minipimer Liliana",
@@ -50,8 +45,7 @@
         "price": 70,
         "thumbail": "Sin imagen",
         "code": "abc08",
-        "stock": 33,
-        "id": "S2v0rWM_On03kMG--DJZ_"
+        "stock": 33
     },
     {
         "title": "Cafetera",
@@ -59,7 +53,6 @@
         "price": 33,
         "thumbail": "sin imagen",
         "code": "mkh-gi",
-        "stock": 5,
-        "id": "c5JTLowJTd9YOadnvDu4q"
+        "stock": 5
     }
 ]
