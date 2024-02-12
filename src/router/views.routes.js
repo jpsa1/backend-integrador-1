@@ -18,4 +18,9 @@ ViewsRouter.get("/realTimeProducts", async (req, res) => {
     res.render("realTimeProducts", {allProducts})
 })
 
+ViewsRouter.get("/chat", async (req, res) => {
+    // let allProducts = await product.getProducts()
+    res.render("chat", {})
+})
+
 export default ViewsRouter

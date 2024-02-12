@@ -1,14 +1,10 @@
-import {promises as fs} from 'fs'
 import {productModel} from './models/products.model.js'
+import {nanoid} from 'nanoid'
 
 
 class ProductManagerMongo {
-    constructor() {
-        this.path = "./src/models/products.json"
-    }
 
     readProducts = async () => {
-        
         try{
             return await productModel.find()  
         }catch(error) {
@@ -22,13 +18,13 @@ class ProductManagerMongo {
     }
 
     exist = async (id) => {
-        return await productModel.findOne({_id:id})
-        
-        // try{
-        //     return await productModel.findById(id)
-        // } catch {
-        //     return undefined   
-        // }
+        try{
+            return await productModel.findOne({ id: id })
+        } catch {
+            console.log("Paso por el catch")
+            return null   
+        }
+        // return await productModel.findOne({_id:id}).lean()
     }
 
     addProducts = async (product) => {
@@ -41,32 +37,19 @@ class ProductManagerMongo {
         
             let productoExiste = await productModel.findOne({code: product.code})
             
-            if(productoExiste) return 'ERROR: Producto repetido' 
-
-            console.log("productoExiste")
-            console.log(productoExiste)
+            if(productoExiste) return 'ERROR: Producto repetido'
             
-                 
+            product.id = nanoid()
+      
             await productModel.create(product)
             return "Producto Agregado exitosamente"
-
-
     }
 
     getProducts = async (limitProduct) => {
         if (limitProduct == undefined) {
             return await this.readProducts()
         } else {
-            let limiteProductos = []
-            let productos = await this.readProducts()
-
-            for (let i = 0; i < productos.length; i++ ) {
-
-                limiteProductos.push(productos[i])
-                if (i == limitProduct-1) break
-            }
-
-            return limiteProductos
+            return await productModel.find().limit(limitProduct)
         }
     }
 
@@ -80,7 +63,7 @@ class ProductManagerMongo {
         let productById = await this.exist(id)
         if(!productById) return "Producto no encontrado"
 
-        await productModel.updateOne({_id:id}, product)
+        await productModel.updateOne({id:id}, product)
 
         return "Producto actualizado exitosamente" 
     }
@@ -89,26 +72,12 @@ class ProductManagerMongo {
         
         let existeProducts = await this.exist(id)
         if (existeProducts) {
-            await productModel.deleteOne({_id:id})
+            await productModel.deleteOne({id:id})
             return "Producto eliminado"
         }else{
             return 'Producto no existe'
         }
-        
-        // let products = await this.readProducts()
-        // let existeProducts = products.some(prod => prod.id === id)
-        // let existeProducts = await this.exist(id)
-
-        // if (existeProducts) {
-            // let filterProducts = products.filter(prod => prod.id != id)
-            // await this.writeProducts(filterProducts)
-
-            // await productModel.deleteOne({_id:id})
-            // return "Producto eliminado"
-        // } 
-        // return "Producto a eliminar inexistente"
     }
-
 }
 
 export default ProductManagerMongo

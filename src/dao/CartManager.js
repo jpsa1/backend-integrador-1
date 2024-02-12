@@ -2,9 +2,14 @@ import {promises as fs} from 'fs'
 import {nanoid} from 'nanoid'
 import ProductManager from "./ProductManager.js";
 
+import { cartModel } from './models/carts.model.js';
+import ProductManagerMongo from './ProductManager.js';
+
 const productAll = new ProductManager()
 
-class CartManager {
+const productAllMongo = new ProductManagerMongo()
+
+class CartManagerMongo {
     constructor() {
         this.path = "./src/models/carts.json"
     }
@@ -19,46 +24,45 @@ class CartManager {
     }
 
     exist = async (id) => {
-        let carts = await this.readCarts()
-        return carts.find(cart => cart.id === id)
+        try{
+            return await cartModel.findOne({id: id})
+        } catch {
+            return null   
+        }
+        // let carts = await this.readCarts()
+        // return carts.find(cart => cart.id === id)
     }
 
     addCart = async () => {
-        let allCarts = await this.readCarts()
-        let cartsConcat = [{id: nanoid(), products: []}, ...allCarts]
-        await this.writeCarts(cartsConcat)
+        await cartModel.create({id: nanoid(), products: []})
         return "Carrito agregado"
+        
+        // let allCarts = await this.readCarts()
+        // let cartsConcat = [{id: nanoid(), products: []}, ...allCarts]
+        // await this.writeCarts(cartsConcat)
+        // return "Carrito agregado"
     }
 
     addProductToCart = async (cid, pid) => {
         let cartById = await this.exist(cid)
         if (!cartById) return "El carrito no existe"
 
-        let productById = await productAll.exist(pid)
+        let productById = await productAllMongo.exist(pid)
+
         if (!productById) return "El producto no existe"
 
-        let productExist = cartById.products.find(data => data.product == productById.id)
+        let productExist = cartById.products.find(data => {data.product == productById.id})
 
         if(productExist) {
-            productExist.quantity++
-            let cartFilter = cartById.products.filter(data => data.product != productById.id)
-
-            cartFilter.push(productExist)
-            cartById.products = cartFilter
+            productExist.quantity++;
+            await cartModel.updateOne(
+                { id: cid, 'products.product': pid },
+                { $set: { 'products.$.quantity': productExist.quantity } },
+                { new: true }
+            );
         } else {
             cartById.products.push({product: productById.id, quantity: 1})
         }
-
-        await this.deleteCart(cid)
-
-        let allCarts = await this.readCarts()
-
-        allCarts.push(cartById)
-
-        console.log("allCarts: ")
-        console.log(allCarts)
-
-        await this.writeCarts(allCarts)
 
         return "Producto agregado al carrito"
 
@@ -87,4 +91,4 @@ class CartManager {
     }
 }
 
-export default CartManager
+export default CartManagerMongo

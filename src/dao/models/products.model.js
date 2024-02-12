@@ -8,7 +8,8 @@ const productShema = new mongoose.Schema({
     price: Number,
     thumbail: String,
     code: String,
-    stock: Number
+    stock: Number,
+    id: String
 })
 
 export const productModel = mongoose.model(productsCollection, productShema)
