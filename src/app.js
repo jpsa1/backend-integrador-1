@@ -19,7 +19,7 @@ import { messagesModel } from "./dao/models/messages.model.js";
 import {Server} from "socket.io"
 
 //Manejador de productos
-import ProductManager from "./controllers/ProductManager.js";
+import ProductManager from "./controllers/ProductManager.js"
 import { error } from "console";
 
 
@@ -34,9 +34,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 
 //Mongoose connection
+const uri = 'mongodb+srv://juanpablo:Casa2010@manager.qrns1ra.mongodb.net/ecommerce?retryWrites=true&w=majority'
+const uriLocal = 'mongodb://localhost:27017/test'
+
 try {
-    // mongoose.connect('mongodb+srv://juanpablo:Casa2010@manager.qrns1ra.mongodb.net/?retryWrites=true&w=majority')
-    mongoose.connect("mongodb://localhost:27017/test");
+    mongoose.connect(uri)
     console.log('Conexión exitosa a la base de datos');
 } catch (error) {
     console.error('Error al conectar a la base de datos:', error);

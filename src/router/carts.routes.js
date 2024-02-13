@@ -9,12 +9,15 @@ const cartsMg = new CartManagerMongo
 CartRouter.get("/:id", async (req, res) => {
     let id = req.params.id
     res.send(await cartsMg.getCartsById(id))
+
+    //filesystem
+    // res.send(await carts.getCartsById(id))
 })
 
 CartRouter.post("/", async (req, res) => {
     res.send(await cartsMg.addCart())
     
-    //filesystema
+    //filesystem
     // res.send(await carts.addCart())
 
 })
@@ -24,7 +27,7 @@ CartRouter.post("/:cid/product/:pid", async (req, res) => {
     let pid = req.params.pid
     res.send(await cartsMg.addProductToCart(cid, pid))
 
-    //filesystema
+    //filesystem
     // res.send(await carts.addProductToCart(cid, pid))
 })
 
