@@ -13,6 +13,7 @@ import __dirname from "./utils.js";
 
 //Mongoose
 import mongoose from "mongoose";
+import { messagesModel } from "./dao/models/messages.model.js";
 
 //Web Socket
 import {Server} from "socket.io"
@@ -66,6 +67,7 @@ const socketServer = new Server(server)
 socketServer.on('connection', async socket => {
     console.log('Nuevo cliente conectado')
 
+    //REALTIMEPRODUCTS
     socket.on('crearProducto', async (product) => {
         await productAll.addProducts(product)
         socket.emit('upDateListProduct', await productAll.getProducts())
@@ -74,6 +76,26 @@ socketServer.on('connection', async socket => {
     socket.on('borrarProducto', async(idProduct)=> {
         await productAll.deleteProducts(idProduct)
         socketServer.emit('upDateListProduct', await productAll.getProducts())
+    })
+
+    //CHAT
+
+    //Funcion guardar mensaje
+    const saveMessage = async (data) => {
+        await messagesModel.create(data)
+    }
+
+    const recoveryMessage = async () => {
+        return await messagesModel.find()
+    }
+
+    //Mensaje enviado
+    socket.on('userMessage', async (data) => {
+        saveMessage(data)
+        let allMessage = await recoveryMessage()
+        console.log("allMessage: ", allMessage)
+
+        socketServer.emit("userMessage", allMessage)
     })
 
 

@@ -75,3 +75,4 @@ socket.on('upDateListProduct', (listProduct) => {
         productsList.appendChild(element)
     }    
 })
+
