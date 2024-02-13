@@ -29,18 +29,11 @@ class CartManagerMongo {
         } catch {
             return null   
         }
-        // let carts = await this.readCarts()
-        // return carts.find(cart => cart.id === id)
     }
 
     addCart = async () => {
         await cartModel.create({id: nanoid(), products: []})
         return "Carrito agregado"
-        
-        // let allCarts = await this.readCarts()
-        // let cartsConcat = [{id: nanoid(), products: []}, ...allCarts]
-        // await this.writeCarts(cartsConcat)
-        // return "Carrito agregado"
     }
 
     addProductToCart = async (cid, pid) => {
@@ -62,6 +55,7 @@ class CartManagerMongo {
             );
         } else {
             cartById.products.push({product: productById.id, quantity: 1})
+            await cartById.save()
         }
 
         return "Producto agregado al carrito"
