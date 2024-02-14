@@ -34,7 +34,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
 
 //Mongoose connection
-const uri = 'mongodb+srv://juanpablo:Casa2010@manager.qrns1ra.mongodb.net/ecommerce?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://juanpablo:Casa2030@manager.qrns1ra.mongodb.net/ecommerce?retryWrites=true&w=majority'
 const uriLocal = 'mongodb://localhost:27017/test'
 
 try {
